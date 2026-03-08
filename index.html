@@ -1876,27 +1876,6 @@
     nextStep(5);
   }
 
-  // Init
-  updateCalc();
-</script>
-</body>
-</html> + potential.toLocaleString() + ' NZD',
-          _subject: 'New Kaha enquiry — ' + (gym || name)
-        })
-      });
-    } catch (err) {
-      console.error('Formspree error:', err);
-    }
-
-    // Reset button
-    const btn = document.querySelector('#step4 .btn-next');
-    if (btn) { btn.textContent = 'SEE MY RESULTS →'; btn.disabled = false; btn.style.opacity = '1'; }
-
-    document.getElementById('bookingGreeting').textContent = `Hey ${name} 👋`;
-    document.getElementById('bookingSummary').textContent =
-      `Based on your ${state.contacts.toLocaleString()} contacts at ${state.membershipPrice}/month, a Kaha campaign could recover ${potential.toLocaleString()} NZD in MRR in the first 60 days — that's ${reactivated} members back. Let's spend 15 minutes walking through the exact numbers for ${gym || 'your gym'}`;
-    nextStep(5);
-  }
 
   // Init
   updateCalc();
