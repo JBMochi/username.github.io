@@ -1110,14 +1110,20 @@
     .container { padding: 0 20px; }
     section { padding: 64px 0; }
 
+    /* Global centre align for mobile */
+    .section-tag { font-size: 10px; text-align: center; display: block; }
+    .section-title { font-size: clamp(24px, 7vw, 38px); text-align: center; }
+    .section-body { text-align: center; }
+
     nav { padding: 16px 20px; }
     .nav-logo { font-size: 20px; letter-spacing: 0.18em; }
     .nav-cta { font-size: 11px; padding: 10px 18px; }
 
-    #hero { min-height: 100svh; padding: 0 20px; }
-    .hero-tag { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 20px; }
-    .hero-title { font-size: clamp(34px, 10vw, 58px); margin-bottom: 20px; }
-    .hero-sub { font-size: 15px; margin-bottom: 36px; max-width: 100%; }
+    /* Hero */
+    #hero { min-height: 100svh; padding: 0 20px; text-align: center; }
+    .hero-tag { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 20px; text-align: center; }
+    .hero-title { font-size: clamp(34px, 10vw, 58px); margin-bottom: 20px; text-align: center; }
+    .hero-sub { font-size: 15px; margin-bottom: 36px; max-width: 100%; text-align: center; }
     .hero-stat-row {
       display: grid !important;
       grid-template-columns: 1fr 1fr;
@@ -1127,28 +1133,52 @@
       border: 1px solid var(--border);
     }
     .hero-stat {
-      text-align: center;
-      padding: 16px 8px;
+      text-align: center !important;
+      padding: 18px 8px;
       border-right: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .hero-stat:nth-child(2n) { border-right: none; }
     .hero-stat:nth-last-child(-n+2) { border-bottom: none; }
-    .hero-stat-num { font-size: 24px; line-height: 1.2; }
-    .hero-stat-label { font-size: 10px; line-height: 1.4; margin-top: 4px; }
+    .hero-stat-num { font-size: 22px; line-height: 1.2; text-align: center; display: block; }
+    .hero-stat-label { font-size: 10px; line-height: 1.4; margin-top: 4px; text-align: center; display: block; }
     .hero-stat-divider { display: none; }
     .hero-cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
     .hero-cta-row .btn-primary,
     .hero-cta-row .btn-ghost { width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; }
     .hero-photo-wrap { height: 260px; margin: 0 -20px; width: calc(100% + 40px); }
 
-    .section-tag { font-size: 10px; }
-    .section-title { font-size: clamp(24px, 7vw, 38px); text-align: center; }
-
+    /* Problem — centre heading */
     .problem-grid { grid-template-columns: 1fr; gap: 40px; }
-    .problem-copy h2 { font-size: clamp(24px, 7vw, 38px); }
+    .problem-copy { text-align: center; }
+    .problem-copy h2 { font-size: clamp(24px, 7vw, 38px); text-align: center; }
+    .problem-copy p { text-align: center; }
+    .problem-copy .section-tag { text-align: center; }
 
-    /* How it works — horizontal row layout so circle + text sit side by side */
+    /* How it works — centre header, reorder so heading above subtitle */
+    .steps-header {
+      flex-direction: column !important;
+      align-items: center !important;
+      text-align: center !important;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .steps-header > div { text-align: center; }
+    .steps-header > div .section-tag { text-align: center; }
+    .steps-header > div .section-title { text-align: center; }
+    .steps-header > p {
+      order: 1;
+      text-align: center !important;
+      max-width: 100% !important;
+      font-size: 14px;
+    }
+    .steps-header > div { order: 0; }
+
+    /* Steps — row layout */
     .steps-grid {
       display: flex !important;
       flex-direction: column !important;
@@ -1180,7 +1210,7 @@
     .step-title { font-size: 14px !important; margin-bottom: 4px !important; text-align: left !important; }
     .step-desc { font-size: 12px !important; text-align: left !important; }
 
-    /* What gym owners get — single column */
+    /* What gym owners get — centre, single column */
     .proof-big {
       display: flex !important;
       flex-direction: column !important;
@@ -1195,9 +1225,12 @@
       border-bottom: 1px solid var(--border) !important;
     }
     .proof-cell:last-child { border-bottom: none !important; }
-    .proof-cell-num { font-size: 32px !important; }
-    .proof-cell-label { font-size: 13px !important; margin-top: 8px; }
+    .proof-cell-num { font-size: 32px !important; text-align: center; }
+    .proof-cell-label { font-size: 13px !important; margin-top: 8px; text-align: center; }
 
+    /* Pricing — centre heading */
+    #pricing .section-tag { text-align: center; }
+    #pricing .section-title { text-align: center; }
     .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
     .pricing-card { padding: 28px 20px; }
     .pricing-price { font-size: 40px; }
@@ -1208,6 +1241,7 @@
     .founder-deal-title { font-size: 15px; }
     .founder-deal-list { grid-template-columns: 1fr; }
 
+    /* Funnel */
     .funnel-wrap { padding: 28px 16px; }
     .funnel-step { padding: 24px 16px; }
     .funnel-title { font-size: clamp(18px, 5vw, 26px); text-align: center; }
@@ -1234,15 +1268,21 @@
     .booking-features { flex-direction: column; align-items: flex-start; gap: 12px; }
     .btn-next { width: 100%; box-sizing: border-box; text-align: center; }
 
+    /* Who */
     .who-grid { grid-template-columns: 1fr; gap: 32px; }
     .who-photo-wrap { max-width: 200px; margin: 0 auto; }
-    .who-title { font-size: clamp(24px, 7vw, 38px); }
-    .who-pills { gap: 8px; }
+    .who-tag { justify-content: center; }
+    .who-title { font-size: clamp(24px, 7vw, 38px); text-align: center; }
+    .who-body { text-align: center; }
+    .who-pills { justify-content: center; gap: 8px; }
     .who-pill { font-size: 11px; padding: 5px 10px; }
+    .who-link { display: inline-block; }
 
+    /* FAQ */
     .faq-q { font-size: 14px; padding: 16px; }
     .faq-a { font-size: 13px; padding: 0 16px 16px; }
 
+    /* Guarantee */
     .guarantee-title { font-size: clamp(20px, 6vw, 32px); text-align: center; }
     .guarantee-body { text-align: center; font-size: 14px; }
 
