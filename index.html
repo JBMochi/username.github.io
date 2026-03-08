@@ -1451,7 +1451,7 @@
             No hard sell
           </div>
         </div>
-        <a href="https://cal.com/kaha" class="booking-btn" target="_blank">BOOK YOUR 15-MIN CALL</a>
+        <a href="https://cal.com/joel-hanson-348npt/30min" class="booking-btn" target="_blank">BOOK YOUR 15-MIN CALL</a>
         <p class="booking-note">Available weekday evenings 4:30–8pm and Saturday mornings 9am–4pm NZT</p>
         <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border)">
           <p style="font-size:13px;color:var(--mid);margin-bottom:16px">While you wait, here's what to prepare:</p>
@@ -1524,7 +1524,7 @@
           <span class="who-pill">Gym Member</span>
           <span class="who-pill">AI Automation</span>
         </div>
-        <a href="https://cal.com/kaha" class="btn-primary" style="display:inline-block;text-decoration:none;font-size:13px;padding:14px 32px" target="_blank">BOOK A CALL WITH ME →</a>
+        <a href="https://cal.com/joel-hanson-348npt/30min" class="btn-primary" style="display:inline-block;text-decoration:none;font-size:13px;padding:14px 32px" target="_blank">BOOK A CALL WITH ME →</a>
       </div>
     </div>
   </div>
@@ -1730,21 +1730,77 @@
     }
   }
 
-  function submitAndNext() {
+  async function submitAndNext() {
     const name = document.getElementById('userName').value.trim();
     const gym = document.getElementById('gymName').value.trim();
     const email = document.getElementById('userEmail').value.trim();
+    const city = document.getElementById('userCity').value;
+
+    // Validate
     if (!name || !email) {
-      document.getElementById('userEmail').style.borderColor = '#ef4444';
+      document.getElementById('userEmail').style.borderColor = !email ? '#ef4444' : '';
       document.getElementById('userName').style.borderColor = !name ? '#ef4444' : '';
       return;
     }
-    state.name = name; state.gym = gym; state.email = email;
+
+    // Button loading state
+    const submitBtn = document.querySelector('#step4 .btn-next');
+    if (submitBtn) { submitBtn.textContent = 'SENDING...'; submitBtn.disabled = true; submitBtn.style.opacity = '0.7'; }
+
+    state.name = name; state.gym = gym; state.email = email; state.city = city;
     const reactivated = Math.round(state.contacts * 0.10);
     const potential = reactivated * state.membershipPrice;
+
+    // Submit to Formspree
+    try {
+      await fetch('https://formspree.io/f/mojkvlwv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          gym: gym || 'Not provided',
+          city: document.getElementById('userCity').value || 'Not provided',
+          gym_type: state.gymType || 'Not selected',
+          years_open: state.yearsOpen || 'Not selected',
+          contacts: state.contacts,
+          membership_price_nzd: state.membershipPrice,
+          follow_up_situation: state.followup || 'Not selected',
+          reactivation_potential: 'See booking summary',
+          _subject: 'New Kaha enquiry — ' + (gym || name)
+        })
+      });
+    } catch (err) {
+      console.error('Formspree error:', err);
+    }
+
+    if (submitBtn) { submitBtn.textContent = 'SEE MY RESULTS →'; submitBtn.disabled = false; submitBtn.style.opacity = '1'; }
+
     document.getElementById('bookingGreeting').textContent = `Hey ${name} 👋`;
     document.getElementById('bookingSummary').textContent =
-      `Based on your ${state.contacts.toLocaleString()} contacts at $${state.membershipPrice}/month, a Kaha campaign could recover ${potential.toLocaleString()} NZD in MRR in the first 60 days — that's ${reactivated} members back. Let's spend 15 minutes walking through the exact numbers for ${gym || 'your gym'}`;
+      `Based on your ${state.contacts.toLocaleString()} contacts at ${state.membershipPrice}/month, a Kaha campaign could recover ${(Math.round(state.contacts * 0.10) * state.membershipPrice).toLocaleString()} NZD in MRR in the first 60 days. Let’s walk through the exact numbers for ${gym || 'your gym'}.`;
+    nextStep(5);
+  }
+
+  // Init
+  updateCalc();
+</script>
+</body>
+</html> + potential.toLocaleString() + ' NZD',
+          _subject: 'New Kaha enquiry — ' + (gym || name)
+        })
+      });
+    } catch (err) {
+      console.error('Formspree error:', err);
+    }
+
+    // Reset button
+    const btn = document.querySelector('#step4 .btn-next');
+    if (btn) { btn.textContent = 'SEE MY RESULTS →'; btn.disabled = false; btn.style.opacity = '1'; }
+
+    document.getElementById('bookingGreeting').textContent = `Hey ${name} 👋`;
+    document.getElementById('bookingSummary').textContent =
+      `Based on your ${state.contacts.toLocaleString()} contacts at ${state.membershipPrice}/month, a Kaha campaign could recover ${potential.toLocaleString()} NZD in MRR in the first 60 days — that's ${reactivated} members back. Let's spend 15 minutes walking through the exact numbers for ${gym || 'your gym'}`;
     nextStep(5);
   }
 
