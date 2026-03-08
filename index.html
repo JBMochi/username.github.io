@@ -1098,84 +1098,154 @@
     footer { flex-direction: column; gap: 16px; text-align: center; }
   }
 
+  /* ── HIDE CURSOR ON TOUCH DEVICES ───────────────────────────────────────── */
+  @media (hover: none) and (pointer: coarse) {
+    .cursor, .cursor-ring { display: none !important; }
+    * { cursor: auto !important; }
+  }
+
   /* ── MOBILE ──────────────────────────────────────────────────────────────── */
   @media (max-width: 600px) {
-    /* Base */
     body { font-size: 15px; }
     .container { padding: 0 20px; }
     section { padding: 64px 0; }
 
-    /* Nav */
     nav { padding: 16px 20px; }
     .nav-logo { font-size: 20px; letter-spacing: 0.18em; }
     .nav-cta { font-size: 11px; padding: 10px 18px; }
 
-    /* Hero */
     #hero { min-height: 100svh; padding: 0 20px; }
     .hero-tag { font-size: 11px; letter-spacing: 0.12em; margin-bottom: 20px; }
-    .hero-title { font-size: clamp(38px, 11vw, 64px); margin-bottom: 20px; }
+    .hero-title { font-size: clamp(34px, 10vw, 58px); margin-bottom: 20px; }
     .hero-sub { font-size: 15px; margin-bottom: 36px; max-width: 100%; }
-    .hero-stat-row { flex-direction: column; align-items: flex-start; gap: 20px; margin-top: 36px; }
-    .hero-stat-num { font-size: 36px; }
+    .hero-stat-row {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 36px;
+      width: 100%;
+      border: 1px solid var(--border);
+    }
+    .hero-stat {
+      text-align: center;
+      padding: 16px 8px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-stat:nth-child(2n) { border-right: none; }
+    .hero-stat:nth-last-child(-n+2) { border-bottom: none; }
+    .hero-stat-num { font-size: 24px; line-height: 1.2; }
+    .hero-stat-label { font-size: 10px; line-height: 1.4; margin-top: 4px; }
     .hero-stat-divider { display: none; }
     .hero-cta-row { flex-direction: column; align-items: stretch; gap: 12px; }
-    .hero-cta-row .btn-primary, .hero-cta-row .btn-ghost { width: 100%; text-align: center; padding: 16px 24px; }
+    .hero-cta-row .btn-primary,
+    .hero-cta-row .btn-ghost { width: 100%; text-align: center; padding: 16px 24px; box-sizing: border-box; }
     .hero-photo-wrap { height: 260px; margin: 0 -20px; width: calc(100% + 40px); }
 
-    /* Section headings */
     .section-tag { font-size: 10px; }
-    h2, .section-title { font-size: clamp(28px, 8vw, 42px); }
+    .section-title { font-size: clamp(24px, 7vw, 38px); text-align: center; }
 
-    /* Problem */
     .problem-grid { grid-template-columns: 1fr; gap: 40px; }
-    .problem-copy h2 { font-size: clamp(28px, 8vw, 42px); }
+    .problem-copy h2 { font-size: clamp(24px, 7vw, 38px); }
 
-    /* Steps */
-    .steps-grid { grid-template-columns: 1fr; gap: 32px; }
-    .step-num { font-size: 48px; }
+    /* How it works — horizontal row layout so circle + text sit side by side */
+    .steps-grid {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 0 !important;
+    }
+    .steps-grid::before { display: none !important; }
+    .step {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+      gap: 16px !important;
+      padding: 20px 0 !important;
+      border-bottom: 1px solid var(--border) !important;
+      text-align: left !important;
+    }
+    .step:last-child { border-bottom: none !important; }
+    .step-num {
+      width: 44px !important;
+      height: 44px !important;
+      min-width: 44px !important;
+      font-size: 16px !important;
+      margin: 0 !important;
+      line-height: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .step-body { flex: 1; min-width: 0; }
+    .step-title { font-size: 14px !important; margin-bottom: 4px !important; text-align: left !important; }
+    .step-desc { font-size: 12px !important; text-align: left !important; }
 
-    /* Proof */
-    .proof-big { grid-template-columns: 1fr 1fr; gap: 16px; }
-    .proof-num { font-size: 36px; }
+    /* What gym owners get — single column */
+    .proof-big {
+      display: flex !important;
+      flex-direction: column !important;
+      background: none !important;
+      border: 1px solid var(--border) !important;
+      gap: 0 !important;
+      margin-top: 32px;
+    }
+    .proof-cell {
+      padding: 28px 20px !important;
+      text-align: center !important;
+      border-bottom: 1px solid var(--border) !important;
+    }
+    .proof-cell:last-child { border-bottom: none !important; }
+    .proof-cell-num { font-size: 32px !important; }
+    .proof-cell-label { font-size: 13px !important; margin-top: 8px; }
 
-    /* Pricing */
     .pricing-grid { grid-template-columns: 1fr; gap: 24px; }
-    .pricing-card { padding: 32px 24px; }
-    .pricing-price { font-size: 48px; }
-    .price-struck { font-size: 0.55em; }
-    .founder-deal { padding: 20px; }
+    .pricing-card { padding: 28px 20px; }
+    .pricing-price { font-size: 40px; }
+    .price-struck { font-size: 0.5em; }
+    .founder-deal { padding: 18px; }
     .founder-deal-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .founder-deal-title { font-size: 18px; }
+    .founder-deal-badge { font-size: 9px; white-space: normal; }
+    .founder-deal-title { font-size: 15px; }
+    .founder-deal-list { grid-template-columns: 1fr; }
 
-    /* Funnel */
-    .funnel-wrap { padding: 32px 20px; }
-    .funnel-step { padding: 28px 20px; }
-    .funnel-title { font-size: clamp(22px, 6vw, 32px); }
-    .option-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .funnel-wrap { padding: 28px 16px; }
+    .funnel-step { padding: 24px 16px; }
+    .funnel-title { font-size: clamp(18px, 5vw, 26px); text-align: center; }
+    .option-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 8px !important;
+      width: 100%;
+    }
+    .option-card {
+      padding: 12px 8px !important;
+      text-align: center !important;
+      font-size: 12px !important;
+    }
+    .option-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+    .option-label { font-size: 11px; line-height: 1.3; }
     .range-row { flex-direction: column; gap: 8px; }
     input[type=range] { width: 100%; }
-    .calc-box { padding: 20px; }
-    .calc-num { font-size: 36px; }
+    .calc-box { padding: 16px; text-align: center; }
+    .calc-num { font-size: 28px; }
     .input-row { flex-direction: column; gap: 12px; }
-    .input-row input { width: 100%; }
-    .booking-card { padding: 28px 20px; }
-    .booking-features { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .input-row input, .funnel-input { width: 100%; box-sizing: border-box; }
+    .booking-card { padding: 24px 16px; }
+    .booking-features { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .btn-next { width: 100%; box-sizing: border-box; text-align: center; }
 
-    /* Who */
     .who-grid { grid-template-columns: 1fr; gap: 32px; }
-    .who-photo-wrap { max-width: 220px; margin: 0 auto; }
-    .who-title { font-size: clamp(28px, 8vw, 42px); }
+    .who-photo-wrap { max-width: 200px; margin: 0 auto; }
+    .who-title { font-size: clamp(24px, 7vw, 38px); }
     .who-pills { gap: 8px; }
     .who-pill { font-size: 11px; padding: 5px 10px; }
 
-    /* FAQ */
-    .faq-q { font-size: 15px; padding: 18px 16px; }
-    .faq-a { font-size: 14px; padding: 0 16px 16px; }
+    .faq-q { font-size: 14px; padding: 16px; }
+    .faq-a { font-size: 13px; padding: 0 16px 16px; }
 
-    /* Guarantee */
-    .guarantee-title { font-size: clamp(24px, 7vw, 36px); }
+    .guarantee-title { font-size: clamp(20px, 6vw, 32px); text-align: center; }
+    .guarantee-body { text-align: center; font-size: 14px; }
 
-    /* Footer */
     footer { padding: 32px 20px; flex-direction: column; gap: 12px; text-align: center; }
     .footer-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
     .footer-copy { font-size: 11px; }
